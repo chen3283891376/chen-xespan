@@ -29,14 +29,13 @@ try:
     user_id: str = sys.argv[1].split("stu_id=")[1].split("; ")[0]
 except IndexError:
     QMessageBox.critical(None, "错误", "看来你不是xes用户，先登录/注册吧！")
-    # login = LoginDialog()
-    # login.show()
-    # if login.exec():
-    #     user_id: str = login.name
-    # else:
-    #     sys.exit()
-    # del app, login
-    user_id: str = "21893394"
+    login = LoginDialog()
+    login.show()
+    if login.exec():
+        user_id: str = login.name
+    else:
+        sys.exit()
+    del app, login
 token: str = ""
 files: List[Dict[str, str]] = []
 pan_data = cloudvar.get_var(f"cloudpan-{user_id}")
