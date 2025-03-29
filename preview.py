@@ -2,9 +2,11 @@ from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtWebEngineWidgets import QWebEngineView
-# from ui.ui_PreviewDialog import Ui_PreviewDialog
+from PySide6.QtPdf import QPdfDocument
+from PySide6.QtPdfWidgets import QPdfView
 from typing import List
 import requests
+import os
 
 class PreviewDialog(QMainWindow):
     def __init__(self, parent=None, file_link: str = ""):
@@ -13,7 +15,7 @@ class PreviewDialog(QMainWindow):
         self.resize(400,302)
 
         # 支持的图片、音频格式列表
-        web_formats: List[str] = ["jpg", "png", "jpeg", "gif", "svg", "wav", "mp3", "ogg", "html", "htm", "pdf"]
+        web_formats: List[str] = ["jpg", "png", "jpeg", "gif", "svg", "wav", "mp3", "ogg", "html", "htm"]
         # 支持的文本格式列表
         text_formats: List[str] = ["txt", "py", "java", "c", "cpp", "css", "js", "markdown", "md", "xml", "json"]
 
@@ -40,6 +42,18 @@ class PreviewDialog(QMainWindow):
                 self.PreviewWidget.setText(text)
             except requests.RequestException as e:
                 self.PreviewWidget.setText(f"无法加载文件: {str(e)}")
+            self.PreviewWidget.setObjectName(u"PreviewWidget")
+            layout.addWidget(self.PreviewWidget)
+        elif file_extension == "pdf":
+            # 如果是PDF格式，使用QPdfWidget来显示
+            pdfdocument = QPdfDocument(self)
+            with open("tmp.pdf", "wb") as f:
+                response = requests.get(file_link)
+                response.raise_for_status()
+                f.write(response.content)
+            pdfdocument.load("tmp.pdf")
+            self.PreviewWidget = QPdfView(self)
+            self.PreviewWidget.setDocument(pdfdocument)
             self.PreviewWidget.setObjectName(u"PreviewWidget")
             layout.addWidget(self.PreviewWidget)
         else:
