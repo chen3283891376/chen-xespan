@@ -9,18 +9,10 @@ from share import ShareDialog
 from typing import List, Dict
 from datetime import datetime
 import utils.cloudvar as cloudvar
+from utils.utils import get_size
 import os
 import upload
 import sys
-
-def get_size(size: int, r: int = 2) -> str:
-    """将字节转换为可读的文件大小格式"""
-    i = 0
-    modes = ("B", "KB", "MB", "GB")
-    while size >= 1024:
-        i += 1
-        size /= 1024
-    return f"{round(size, r)}{modes[i]}"
 
 # 创建应用
 app = QApplication()

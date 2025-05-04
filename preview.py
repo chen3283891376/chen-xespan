@@ -6,7 +6,6 @@ from PySide6.QtPdf import QPdfDocument
 from PySide6.QtPdfWidgets import QPdfView
 from typing import List
 import requests
-import os
 
 class PreviewDialog(QMainWindow):
     def __init__(self, parent=None, file_link: str = ""):

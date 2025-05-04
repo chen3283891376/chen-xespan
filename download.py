@@ -2,29 +2,10 @@ from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from ui import Ui_DownloadDialog
+from .utils.utils import size_to_bytes, UNITS, USER_AGENT
 from typing import Dict
 import requests
 import threading
-
-USER_AGENT: str = "1145141919810"
-UNITS: Dict[str, int] = {
-    "B": 1,
-    "K": 1024,
-    "M": 1024 ** 2,
-    "G": 1024 ** 3
-}
-
-def size_to_bytes(size_str: str) -> int:
-    """
-    将文件大小字符串转换为字节数
-    :param size_str: 文件大小字符串，例如 "5M"
-    :return: 字节数
-    """
-    for unit, multiplier in UNITS.items():
-        if unit in size_str:
-            number = float(size_str.replace(unit, ""))
-            return int(number * multiplier)
-    return None
 
 class DownloadDialog(QDialog, Ui_DownloadDialog):
     """
