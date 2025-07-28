@@ -2,7 +2,7 @@ from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from ui import Ui_DownloadDialog
-from .utils.utils import size_to_bytes, UNITS, USER_AGENT
+from utils.utils import size_to_bytes, UNITS, USER_AGENT
 from typing import Dict
 import requests
 import threading
